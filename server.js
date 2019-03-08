@@ -10,7 +10,14 @@ const increment = () => {
   return (init += 1);
 };
 
-let data = [];
+let data = [
+  {
+    id: 1,
+    title: "TESTING",
+    genre: "TEST",
+    releaseYear: 1993
+  }
+];
 
 server.get("/", (req, res) => {
   res.json("it works!");
@@ -38,6 +45,17 @@ server.post("/games", (req, res) => {
 
 server.get("/games", (req, res) => {
   res.json(data);
+});
+
+server.get("/games/:id", (req, res) => {
+  const { id } = req.params;
+
+  const game = data.find(games => games.id == id);
+  if (game) {
+    res.json(game);
+  } else {
+    res.status(404).json({ message: "Game not found" });
+  }
 });
 
 module.exports = server;

@@ -42,4 +42,12 @@ describe("GET /games", () => {
         expect(res.status).toBe(200);
         expect(res.type).toBe("application/json");
       }));
+
+  describe("GET /games/:id", () => {
+    it("should return 404 if game not found", () => {
+      return request(server)
+        .get("/games/1000")
+        .then(res => expect(res.status).toBe(404));
+    });
+  });
 });
