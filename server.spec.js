@@ -42,20 +42,20 @@ describe("GET /games", () => {
         expect(res.status).toBe(200);
         expect(res.type).toBe("application/json");
       }));
+});
 
-  describe("GET /games/:id", () => {
-    it("should return 404 if game not found", () => {
-      return request(server)
-        .get("/games/1000")
-        .then(res => expect(res.status).toBe(404));
-    });
+describe("DELETE /games/:id", () => {
+  it("should delete game", () => {
+    return request(server)
+      .delete("/games/1")
+      .then(res => expect(res.status).toBe(200));
   });
+});
 
-  describe("DELETE /games/:id", () => {
-    it("should delete game", () => {
-      return request(server)
-        .delete("/games/1")
-        .then(res => expect(res.status).toBe(200));
-    });
+describe("GET /games/:id", () => {
+  it("should return 404 if game not found", () => {
+    return request(server)
+      .get("/games/1000")
+      .then(res => expect(res.status).toBe(404));
   });
 });
