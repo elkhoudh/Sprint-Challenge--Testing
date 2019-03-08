@@ -36,10 +36,6 @@ server.post("/games", (req, res) => {
       data.push({ id: increment(), title, genre, releaseYear });
       res.status(201).json(data);
     }
-    // dupeTitle && dupeTitle.title === title
-    //   ? res.status(405).json({ message: "Action not allowed" })
-    //   : data.push({ id: increment(), title, genre, releaseYear });
-    // res.status(201).json(data);
   }
 });
 
@@ -56,6 +52,14 @@ server.get("/games/:id", (req, res) => {
   } else {
     res.status(404).json({ message: "Game not found" });
   }
+});
+
+server.delete("/games/:id", (req, res) => {
+  const { id } = req.params;
+
+  const game = data.filter(game => game.id != id);
+
+  res.json(game);
 });
 
 module.exports = server;

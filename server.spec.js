@@ -50,4 +50,12 @@ describe("GET /games", () => {
         .then(res => expect(res.status).toBe(404));
     });
   });
+
+  describe("DELETE /games/:id", () => {
+    it("should delete game", () => {
+      return request(server)
+        .delete("/games/1")
+        .then(res => expect(res.status).toBe(200));
+    });
+  });
 });
