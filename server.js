@@ -21,15 +21,10 @@ server.post("/games", (req, res) => {
   if (!title || !genre) {
     res.status(422).json({ message: "All feild required" });
   } else {
-    const dupeTitle = data.find(game => game.title);
+    const dupeTitle = data.find(game => game.title === title);
 
     if (dupeTitle) {
-      if (dupeTitle.title === title) {
-        res.status(405).json({ message: "Action not allowed" });
-      } else {
-        data.push({ id: increment(), title, genre, releaseYear });
-        res.status(201).json(data);
-      }
+      res.status(405).json({ message: "Action not allowed" });
     } else {
       data.push({ id: increment(), title, genre, releaseYear });
       res.status(201).json(data);
