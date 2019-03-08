@@ -21,6 +21,17 @@ describe("POST /games", () => {
         releaseYear: 1980 // not required
       })
       .then(res => expect(res.status).toBe(422)));
+
+  it("validate title is unique", () => {
+    return request(server)
+      .post("/games")
+      .send({
+        title: "Pacman", // required
+        genre: "Arcade", // required
+        releaseYear: 1980 // not required
+      })
+      .then(res => expect(res.status).toBe(405));
+  });
 });
 
 describe("GET /games", () => {

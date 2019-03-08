@@ -4,6 +4,12 @@ const server = express();
 
 server.use(express.json());
 
+let init = 1;
+
+const increment = () => {
+  return (init += 1);
+};
+
 let data = [];
 
 server.get("/", (req, res) => {
@@ -15,8 +21,14 @@ server.post("/games", (req, res) => {
   if (!title || !genre) {
     res.status(422).json({ message: "All feild required" });
   } else {
-    data.push({ title, genre, releaseYear });
-    res.status(201).json(data);
+    const dupeTitle = data.find(game => game.title);
+
+    if (dupeTitle) {
+      res.status(405).json({ message: "Action not allowed" });
+    } else {
+      data.push({ id: increment(), title, genre, releaseYear });
+      res.status(201).json(data);
+    }
   }
 });
 
