@@ -24,11 +24,20 @@ server.post("/games", (req, res) => {
     const dupeTitle = data.find(game => game.title);
 
     if (dupeTitle) {
-      res.status(405).json({ message: "Action not allowed" });
+      if (dupeTitle.title === title) {
+        res.status(405).json({ message: "Action not allowed" });
+      } else {
+        data.push({ id: increment(), title, genre, releaseYear });
+        res.status(201).json(data);
+      }
     } else {
       data.push({ id: increment(), title, genre, releaseYear });
       res.status(201).json(data);
     }
+    // dupeTitle && dupeTitle.title === title
+    //   ? res.status(405).json({ message: "Action not allowed" })
+    //   : data.push({ id: increment(), title, genre, releaseYear });
+    // res.status(201).json(data);
   }
 });
 
